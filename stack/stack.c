@@ -24,11 +24,11 @@ int main (int argc, char* argv[]){
   }
 
   unsigned int size = (unsigned int) atoi(argv[1]);
-  Stack* buffer = createStack(size);
-  interface(buffer);
+  Stack* stack = createStack(size);
+  interface(stack);
 }
 
-void interface(Stack* buffer){
+void interface(Stack* stack){
   char str[28];
   char command[15];
   char argument[10];
@@ -53,11 +53,11 @@ void interface(Stack* buffer){
     n = atoi(argument);
  
     if (!strcmp(command, "quit")) exit(0);
-    else if (!strcmp(command, "pop")) pop(buffer);
-    else if (!strcmp(command, "push")) push(buffer, n);
-    else if (!strcmp(command, "empty")) printf("%d\n", empty(buffer));
-    else if (!strcmp(command, "top")) printf("%d\n", top(buffer));
-    else if (!strcmp(command, "printStack")) printStack(buffer);
+    else if (!strcmp(command, "pop")) pop(stack);
+    else if (!strcmp(command, "push")) push(stack, n);
+    else if (!strcmp(command, "empty")) printf("%d\n", empty(stack));
+    else if (!strcmp(command, "top")) printf("%d\n", top(stack));
+    else if (!strcmp(command, "printStack")) printStack(stack);
     else {
       printf("Invalid Command.\n");
     }
@@ -68,17 +68,17 @@ void interface(Stack* buffer){
 }
 
 Stack* createStack(unsigned int size){
-  Stack* buffer = (Stack*) malloc(size * sizeof(Stack));
-  buffer->size = size;
-  buffer->top = -1;
-  buffer->buffer = (int*) malloc(size * sizeof(int));
-  return buffer;
+  Stack* stack = (Stack*) malloc(size * sizeof(Stack));
+  stack->size = size;
+  stack->top = -1;
+  stack->buffer = (int*) malloc(size * sizeof(int));
+  return stack;
 }
 
-int pop(Stack* buffer){
-  if (!empty()){
-    buffer->top--;
-    printStack(buffer);
+int pop(Stack* stack){
+  if (!empty(stack)){
+    stack->top--;
+    printStack(stack);
     return 1;
   }
 
@@ -86,32 +86,32 @@ int pop(Stack* buffer){
   return 0;
 }
 
-_Bool push(Stack* buffer, int n){
-  if (buffer->top == buffer->size-1){
+_Bool push(Stack* stack, int n){
+  if (stack->top == stack->size-1){
     printf("The stack is full.\n");
     return false;
   }
   
-  buffer->buffer[++buffer->top] = n;
-  printStack(buffer);
+  stack->buffer[++stack->top] = n;
+  printStack(stack);
   return true; 
 }
 
-_Bool empty(Stack* buffer){
-  if(buffer->top == -1) return true;
+_Bool empty(Stack* stack){
+  if(stack->top == -1) return true;
   else return false;
 }
 
-int top(Stack* buffer){
-  return buffer->buffer[buffer->top];
+int top(Stack* stack){
+  return stack->buffer[stack->top];
 }
 
-void printStack(Stack* buffer){
+void printStack(Stack* stack){
   unsigned int i;
   printf("[");
-  for (i = 0; i < buffer->top+1; i++){
-    printf("%u", buffer->buffer[i]);
-    if (i != buffer->top) printf(", ");
+  for (i = 0; i < stack->top+1; i++){
+    printf("%u", stack->buffer[i]);
+    if (i != stack->top) printf(", ");
   }
   printf("]\n");
 }
