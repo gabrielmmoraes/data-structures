@@ -18,43 +18,35 @@ void printStack();
 void interface();
 
 int main (int argc, char* argv[]){
-
   if (argc != 2){
     printf("Please execute the file with the stack size as an argument.\nE.g. ./stack 2\n");
     exit(0);
   }
 
   unsigned int size = (unsigned int) atoi(argv[1]);
-
   Stack* buffer = createStack(size);
-
   interface(buffer);
 }
 
 void interface(Stack* buffer){
-  
   char str[28];
   char command[15];
   char argument[10];
 
-
   while(1){
- 
     printf(">> ");
- 
     fgets(str, sizeof str, stdin);
  
     int i = 0;
     int j = 0;
- 
+    int n;
+
     if(str[0] == '\n') continue;
  
     while(str[i]!='(')  command[j++] = str[i++];
  
     i++;
     j = 0;
- 
-    int n;
  
     while(str[i]!=')')  argument[j++] = str[i++];
  
@@ -95,7 +87,6 @@ int pop(Stack* buffer){
 }
 
 _Bool push(Stack* buffer, int n){
-  
   if (buffer->top == buffer->size-1){
     printf("The stack is full.\n");
     return false;
