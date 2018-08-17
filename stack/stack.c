@@ -77,7 +77,7 @@ Stack* createStack(unsigned int size){
 
 int pop(Stack* stack){
   if (!empty(stack)){
-    stack->top--;
+    printf("%d\n", stack->buffer[stack->top--]);
     printStack(stack);
     return 1;
   }
