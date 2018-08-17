@@ -1,2 +1,2 @@
-# data_structures
+# Data Structures
 Implementation of Data Structures in C language.
