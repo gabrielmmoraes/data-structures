@@ -19,9 +19,10 @@ void interface();
 
 int main (int argc, char* argv[]){
 
-  char str[28];
-  char command[15];
-  char argument[10];
+  if (argc != 2){
+    printf("Please execute the file with the stack size as an argument.\nE.g. ./stack 2\n");
+    exit(0);
+  }
 
   unsigned int size = (unsigned int) atoi(argv[1]);
 
