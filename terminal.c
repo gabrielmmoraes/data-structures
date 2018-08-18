@@ -4,13 +4,25 @@
 #include	<string.h>
 #include  "terminal.h"
 
+//////////////////////////////////////////////////////////////////////
+
+// Defining constants
+
 #define MAX_COMMANDS 10
+
+//////////////////////////////////////////////////////////////////////
+
+// Declaring variables
 
 uint8_t             commandIndex		          =				 0; 
 char                commandType			  [MAX_COMMANDS][4 ];
 unsigned long int   commandAddress		[MAX_COMMANDS]    ;
 char                commandName			  [MAX_COMMANDS][15];
 uint8_t             commandArguments  [MAX_COMMANDS]    ;
+
+//////////////////////////////////////////////////////////////////////
+
+// Defining functions
 
 void initTerminal(unsigned long int structureAddress){
   char str[28];
@@ -44,7 +56,7 @@ void initTerminal(unsigned long int structureAddress){
 }
 
 void addCommand(char type[], unsigned long int funcAddress, char name[], uint8_t args){
-    if(commandIndex <  MAX_COMMANDS){
+  if(commandIndex <  MAX_COMMANDS){
 		strcpy(commandType[commandIndex], type);
 		commandAddress[commandIndex] = funcAddress;
 		strcpy(commandName[commandIndex], name);
