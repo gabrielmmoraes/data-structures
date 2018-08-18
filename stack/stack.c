@@ -5,8 +5,6 @@
 
 //////////////////////////////////////////////////////////////////////
 
-// Defining stack structure
-
 typedef struct Stack {
   unsigned int size;
   int top;
