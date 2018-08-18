@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
+#include "../terminal.h"
+
+//////////////////////////////////////////////////////////////////////
 
 typedef struct Stack {
   unsigned int size;
@@ -9,13 +11,24 @@ typedef struct Stack {
   int* buffer;
 }Stack;
 
+Stack* stack;
+
+//////////////////////////////////////////////////////////////////////
+
+// Declaring private functions
+
 Stack* createStack();
+void setupTerminal();
+int empty();
+
+// Declaring public functions
+
 int pop();
-_Bool push();
-_Bool empty();
+int push();
 int top();
 void printStack();
-void interface();
+
+//////////////////////////////////////////////////////////////////////
 
 int main (int argc, char* argv[]){
   if (argc != 2){
@@ -24,48 +37,15 @@ int main (int argc, char* argv[]){
   }
 
   unsigned int size = (unsigned int) atoi(argv[1]);
-  Stack* stack = createStack(size);
-  interface(stack);
+  stack = createStack(size);
+
+  setupTerminal();
+  initTerminal(stack);
 }
 
-void interface(Stack* stack){
-  char str[28];
-  char command[15];
-  char argument[10];
+//////////////////////////////////////////////////////////////////////
 
-  while(1){
-    printf(">> ");
-    fgets(str, sizeof str, stdin);
- 
-    int i = 0;
-    int j = 0;
-    int n;
-
-    if(str[0] == '\n') continue;
- 
-    while(str[i]!='(')  command[j++] = str[i++];
- 
-    i++;
-    j = 0;
- 
-    while(str[i]!=')')  argument[j++] = str[i++];
- 
-    n = atoi(argument);
- 
-    if (!strcmp(command, "quit")) exit(0);
-    else if (!strcmp(command, "pop")) pop(stack);
-    else if (!strcmp(command, "push")) push(stack, n);
-    else if (!strcmp(command, "empty")) printf("%d\n", empty(stack));
-    else if (!strcmp(command, "top")) printf("%d\n", top(stack));
-    else if (!strcmp(command, "printStack")) printStack(stack);
-    else {
-      printf("Invalid Command.\n");
-    }
- 
-    memset(command, 0, sizeof(command));
-    memset(argument, 0, sizeof(argument));
- }
-}
+// Defining private functions
 
 Stack* createStack(unsigned int size){
   Stack* stack = (Stack*) malloc(size * sizeof(Stack));
@@ -74,6 +54,20 @@ Stack* createStack(unsigned int size){
   stack->buffer = (int*) malloc(size * sizeof(int));
   return stack;
 }
+
+void setupTerminal(){
+  addCommand("int",   (unsigned long int) &pop,         "pop",        0);
+  addCommand("int",   (unsigned long int) &push,        "push",       1);
+  addCommand("int",   (unsigned long int) &top,         "top",        0);
+  addCommand("void",  (unsigned long int) &printStack,  "printStack", 0);
+}
+
+int empty(Stack* stack){
+  if(stack->top == -1) return 1;
+  else return 0;
+}
+
+// Defining public functions
 
 int pop(Stack* stack){
   if (!empty(stack)){
@@ -86,24 +80,25 @@ int pop(Stack* stack){
   return 0;
 }
 
-_Bool push(Stack* stack, int n){
+int push(Stack* stack, int n){
   if (stack->top == stack->size-1){
     printf("The stack is full.\n");
-    return false;
+    return 0;
   }
   
   stack->buffer[++stack->top] = n;
   printStack(stack);
-  return true; 
-}
-
-_Bool empty(Stack* stack){
-  if(stack->top == -1) return true;
-  else return false;
+  return 1; 
 }
 
 int top(Stack* stack){
-  return stack->buffer[stack->top];
+  if(!empty(stack)){
+    printf("%d\n", stack->buffer[stack->top]);
+    return 1;
+  }
+  
+  else  printf("The stack is empty\n");
+  return 0;
 }
 
 void printStack(Stack* stack){
