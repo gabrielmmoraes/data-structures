@@ -3,6 +3,8 @@
 #include <string.h>
 #include "../terminal.h"
 
+//////////////////////////////////////////////////////////////////////
+
 typedef struct Stack {
   unsigned int size;
   int top;
@@ -11,18 +13,22 @@ typedef struct Stack {
 
 Stack* stack;
 
-// Public Functions
+//////////////////////////////////////////////////////////////////////
+
+// Declaring private functions
+
+Stack* createStack();
+void setupTerminal();
+int empty();
+
+// Declaring public functions
 
 int pop();
 int push();
 int top();
 void printStack();
 
-// Private Functions
-
-Stack* createStack();
-void setupTerminal();
-int empty();
+//////////////////////////////////////////////////////////////////////
 
 int main (int argc, char* argv[]){
   if (argc != 2){
@@ -36,6 +42,10 @@ int main (int argc, char* argv[]){
   setupTerminal();
   initTerminal(stack);
 }
+
+//////////////////////////////////////////////////////////////////////
+
+// Defining private functions
 
 Stack* createStack(unsigned int size){
   Stack* stack = (Stack*) malloc(size * sizeof(Stack));
@@ -51,6 +61,13 @@ void setupTerminal(){
   addCommand("int",   (unsigned long int) &top,         "top",        0);
   addCommand("void",  (unsigned long int) &printStack,  "printStack", 0);
 }
+
+int empty(Stack* stack){
+  if(stack->top == -1) return 1;
+  else return 0;
+}
+
+// Defining public functions
 
 int pop(Stack* stack){
   if (!empty(stack)){
@@ -72,11 +89,6 @@ int push(Stack* stack, int n){
   stack->buffer[++stack->top] = n;
   printStack(stack);
   return 1; 
-}
-
-int empty(Stack* stack){
-  if(stack->top == -1) return 1;
-  else return 0;
 }
 
 int top(Stack* stack){
