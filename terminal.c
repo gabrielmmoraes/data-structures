@@ -15,7 +15,6 @@
 // Declaring variables
 
 uint8_t             commandIndex		          =				 0; 
-char                commandType			  [MAX_COMMANDS][4 ];
 unsigned long int   commandAddress		[MAX_COMMANDS]    ;
 char                commandName			  [MAX_COMMANDS][15];
 uint8_t             commandArguments  [MAX_COMMANDS]    ;
@@ -55,9 +54,8 @@ void initTerminal(unsigned long int structureAddress){
   }
 }
 
-void addCommand(char type[], unsigned long int funcAddress, char name[], uint8_t args){
+void addCommand(unsigned long int funcAddress, char name[], uint8_t args){
   if(commandIndex <  MAX_COMMANDS){
-		strcpy(commandType[commandIndex], type);
 		commandAddress[commandIndex] = funcAddress;
 		strcpy(commandName[commandIndex], name);
 		commandArguments[commandIndex] = args;
@@ -68,7 +66,7 @@ void addCommand(char type[], unsigned long int funcAddress, char name[], uint8_t
 
 void checkCommands(){
 	for(uint8_t i=0; i<commandIndex;i++){
-		printf("Command %d:\n\tType: %s\n\tAddress: %lx\n\tName: %s\n\tNumber of Arguments: %d\n", i+1, commandType[i], commandAddress[i], commandName[i], commandArguments[i]);
+		printf("Command %d:\n\tAddress: %lx\n\tName: %s\n\tNumber of Arguments: %d\n", i+1, commandAddress[i], commandName[i], commandArguments[i]);
 	} 
 }
 
@@ -77,31 +75,17 @@ void executeCommand(unsigned long int structureAddress, char command[], int n){
   
   for(uint8_t i=0; i<commandIndex; i++){
     if(!strcmp(command, commandName[i])){
-      if(!strcmp(commandType[i], "int")){
-        if(!commandArguments[i]){
-          int (*func)() = (int (*)())commandAddress[i];
-          func(structureAddress);
-          break;
-        }
-        else{
-          int (*func)() = (int (*)())commandAddress[i];
-          func(structureAddress, n);
-          break;
-        }
+      if(!commandArguments[i]){
+        void (*func)() = (void (*)())commandAddress[i];
+        func(structureAddress);
+        break;
       }
-      else if(!strcmp(commandType[i], "void")){
-        if(!commandArguments[i]){
-          void (*func)() = (void (*)())commandAddress[i];
-          func(structureAddress);
-          break;
-        }
-        else{
-          void (*func)() = (void (*)())commandAddress[i];
-          func(structureAddress, n);
-          break;
-        }
+      else{
+        void (*func)() = (void (*)())commandAddress[i];
+        func(structureAddress, n);
+        break;
       }
-    }
+    } 
     else if (i == commandIndex-1) printf("Invalid command.\n");
   }
 }

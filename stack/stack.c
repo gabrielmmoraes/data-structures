@@ -23,9 +23,9 @@ int empty();
 
 // Declaring public functions
 
-int pop();
-int push();
-int top();
+void pop();
+void push();
+void top();
 void printStack();
 
 //////////////////////////////////////////////////////////////////////
@@ -56,10 +56,10 @@ Stack* createStack(unsigned int size){
 }
 
 void setupTerminal(){
-  addCommand("int",   (unsigned long int) &pop,         "pop",        0);
-  addCommand("int",   (unsigned long int) &push,        "push",       1);
-  addCommand("int",   (unsigned long int) &top,         "top",        0);
-  addCommand("void",  (unsigned long int) &printStack,  "printStack", 0);
+  addCommand((unsigned long int) &pop,         "pop",        0);
+  addCommand((unsigned long int) &push,        "push",       1);
+  addCommand((unsigned long int) &top,         "top",        0);
+  addCommand((unsigned long int) &printStack,  "printStack", 0);
 }
 
 int empty(Stack* stack){
@@ -69,36 +69,36 @@ int empty(Stack* stack){
 
 // Defining public functions
 
-int pop(Stack* stack){
+void pop(Stack* stack){
   if (!empty(stack)){
     printf("%d\n", stack->buffer[stack->top--]);
     printStack(stack);
-    return 1;
+    return;
   }
 
   else printf("The stack is empty.\n");
-  return 0;
+  return;
 }
 
-int push(Stack* stack, int n){
+void push(Stack* stack, int n){
   if (stack->top == stack->size-1){
     printf("The stack is full.\n");
-    return 0;
+    return;
   }
   
   stack->buffer[++stack->top] = n;
   printStack(stack);
-  return 1; 
+  return; 
 }
 
-int top(Stack* stack){
+void top(Stack* stack){
   if(!empty(stack)){
     printf("%d\n", stack->buffer[stack->top]);
-    return 1;
+    return;
   }
   
   else  printf("The stack is empty\n");
-  return 0;
+  return;
 }
 
 void printStack(Stack* stack){

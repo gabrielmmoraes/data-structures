@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 void initTerminal();
-void addCommand(char*, unsigned long int, char*, uint8_t);
+void addCommand(unsigned long int, char*, uint8_t);
 void checkCommands();
 void executeCommand(unsigned long int, char*, int);
 
