@@ -40,7 +40,7 @@ int main (int argc, char* argv[]){
   stack = createStack(size);
 
   setupTerminal();
-  initTerminal(stack);
+  init_terminal(stack);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -56,10 +56,10 @@ Stack* createStack(unsigned int size){
 }
 
 void setupTerminal(){
-  addCommand((unsigned long int) &pop,         "pop",        0);
-  addCommand((unsigned long int) &push,        "push",       1);
-  addCommand((unsigned long int) &top,         "top",        0);
-  addCommand((unsigned long int) &printStack,  "printStack", 0);
+  add_command((unsigned long int) &pop,         "pop",        0);
+  add_command((unsigned long int) &push,        "push",       1);
+  add_command((unsigned long int) &top,         "top",        0);
+  add_command((unsigned long int) &printStack,  "printStack", 0);
 }
 
 int empty(Stack* stack){
