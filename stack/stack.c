@@ -11,8 +11,6 @@ typedef struct Stack {
   int* buffer;
 }Stack;
 
-Stack* stack;
-
 //////////////////////////////////////////////////////////////////////
 
 // Declaring private functions
@@ -37,7 +35,7 @@ int main (int argc, char* argv[]){
   }
 
   unsigned int size = (unsigned int) atoi(argv[1]);
-  stack = createStack(size);
+  Stack* stack = createStack(size);
 
   setupTerminal();
   init_terminal(stack);
