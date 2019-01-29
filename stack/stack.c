@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../c-terminal/terminal.h"
+#include "../ds-terminal/terminal.h"
 
 //////////////////////////////////////////////////////////////////////
 
@@ -54,10 +54,10 @@ Stack* createStack(unsigned int size){
 }
 
 void setupTerminal(){
-  add_command((unsigned long int) &pop,         "pop",        0);
-  add_command((unsigned long int) &push,        "push",       1);
-  add_command((unsigned long int) &top,         "top",        0);
-  add_command((unsigned long int) &printStack,  "printStack", 0);
+  add_command(pop,         "pop",        0);
+  add_command(push,        "push",       1);
+  add_command(top,         "top",        2);
+  add_command(printStack,  "printStack", 0);
 }
 
 int empty(Stack* stack){

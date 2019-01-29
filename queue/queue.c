@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "../c-terminal/terminal.h"
+#include "../ds-terminal/terminal.h"
 
 typedef struct Queue{
   unsigned int size;
