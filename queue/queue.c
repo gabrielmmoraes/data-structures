@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "../c-terminal/terminal.h"
+#include "../ds-terminal/terminal.h"
 
 typedef struct Queue{
   unsigned int size;
@@ -105,7 +105,7 @@ int empty(Queue* queue){
 }
 
 void setup_terminal(){
-  add_command((unsigned long int) &enqueue, "enqueue", 1);
-  add_command((unsigned long int) &dequeue, "dequeue", 0);
-  add_command((unsigned long 	int) &print_queue, "print_queue", 0);
+  add_command(enqueue, "enqueue", 1);
+  add_command(dequeue, "dequeue", 0);
+  add_command(print_queue, "print_queue", 0);
 }
